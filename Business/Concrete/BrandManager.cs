@@ -30,6 +30,7 @@ namespace Business.Concrete
         public List<Brand> GetAll()
         {
            return _brandDal.GetAll();
+
         }
 
         public void Update(Brand brand)

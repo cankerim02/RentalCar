@@ -21,7 +21,9 @@ namespace Business.Concrete
             if(car.CarName.Length >= 2 && car.DailyPrice > 0)
             {
                 _carDal.Add(car);
+
             }
+
             else
             {
                 throw new Exception("Araba ismi minimum 2 karakter olmalıdır ve günlük fiyatı 0'dan büyük olmalıdır.");

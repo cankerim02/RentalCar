@@ -22,9 +22,11 @@ namespace ConsoleUI
         private static void DailyPriceAndCarName()
         {
 
+            
             //Araba ismi 2 den büyük ve eşit  olanları ve fiyatı 0 dan büyük olanları ekle.
             CarManager carManager = new CarManager(new EfCarDal());
             carManager.Add(new Car { BrandId = 1, ColourId = 1, DailyPrice = 100, CarName = "H", ModelYear = 2020 });
+
         }
 
         //private static void CarBiggerThanTwo()

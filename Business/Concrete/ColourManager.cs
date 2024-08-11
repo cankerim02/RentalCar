@@ -30,6 +30,7 @@ namespace Business.Concrete
         public List<Colour> GetAll()
         {
             return _colourDal.GetAll();
+
         }
 
         public void Update(Colour colour)
