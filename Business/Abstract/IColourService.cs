@@ -12,5 +12,8 @@ namespace Business.Abstract
         void Add(Colour colour);
         void Update(Colour colour);
         void Delete(Colour colour);
+
+        List<Colour> GetAll();
+
     }
 }

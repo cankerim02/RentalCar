@@ -27,6 +27,11 @@ namespace Business.Concrete
             _brandDal.Delete(brand);
         }
 
+        public List<Brand> GetAll()
+        {
+           return _brandDal.GetAll();
+        }
+
         public void Update(Brand brand)
         {
             _brandDal.Update(brand);
