@@ -1,5 +1,6 @@
 ﻿using Core.DataAccess.EntityFramework;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace DataAccess.Abstract
         //List<Car> GetAllByCarsColor(int colorId);
         //List<Car> GetAllByBrandColor(int brandId);
 
-        
+        List<CarDetailDto> GetCarDetails();
 
     }
 }
