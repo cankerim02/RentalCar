@@ -14,7 +14,7 @@ namespace Business.Concrete
 {
     public class BrandManager : IBrandService
     {
-        private IBrandDal _brandDal;
+        IBrandDal _brandDal;
         public BrandManager(IBrandDal brandDal)
         {
             _brandDal = brandDal;

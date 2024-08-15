@@ -20,10 +20,25 @@ namespace ConsoleUI
 
             //GetCarsByBrandId();,
             //GetCarsByColorId();
+            //GetCarDetails();
+
+            UserManager userManger = new UserManager(new EfUserDal());
+
+            var result = userManger.GetAll();
+            foreach(var item in result.Data)
+            {
+                Console.WriteLine(item.FirstName + "" + item.LastName);
+            }
+
+
+        }
+
+        private static void GetCarDetails()
+        {
             CarManager carManager = new CarManager(new EfCarDal());
 
             var result = carManager.GetCarDetails();
-            if(result.Success)
+            if (result.Success)
             {
                 foreach (var car in result.Data)
                 {
@@ -34,7 +49,6 @@ namespace ConsoleUI
             {
                 Console.WriteLine(result.Message);
             }
-            
         }
 
         //private static void GetCarsByColorId()
