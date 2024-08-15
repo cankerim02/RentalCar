@@ -11,5 +11,7 @@ namespace Business.Constants
         
         public static string CarAdded = "Araba eklendi";
         public static string CarListed = "Arabalar listelendi.";
+        public static string BrandListed= "Markalar listelendi.";
+        public static string ColourListed="Renkler listelendi.";
     }
 }
