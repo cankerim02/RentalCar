@@ -22,15 +22,54 @@ namespace ConsoleUI
             //GetCarsByColorId();
             //GetCarDetails();
 
-            UserManager userManger = new UserManager(new EfUserDal());
+            //UserAddAndGetAll();
 
-            var result = userManger.GetAll();
-            foreach(var item in result.Data)
+            //CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            //customerManager.Add(
+            //    new Customer
+            //    {
+            //        CompanyName = "Test",
+            //        UserId = 7,
+            //        CustomerId = 6,
+            //    });
+            //foreach (var customer in customerManager.GetAll().Data)
+            //{
+            //    Console.WriteLine(customer.UserId+ " " +customer.CustomerId+ " " +customer.CompanyName);
+            //}
+
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            rentalManager.Add(
+                new Rental
+                {
+                    CarId = 11,
+                    RentalId = 6,
+                    ReturnDate = DateTime.Now,
+                    RentDate = DateTime.Now,
+                });
+            foreach (var rental in rentalManager.GetAll().Data)
             {
-                Console.WriteLine(item.FirstName + "" + item.LastName);
+                Console.WriteLine(rental.CarId+ " " + rental.RentalId + " " + rental.RentDate + " " + rental.ReturnDate);
             }
 
+        }
 
+        private static void UserAddAndGetAll()
+        {
+            UserManager userManger = new UserManager(new EfUserDal());
+
+            userManger.Add(
+                new User
+                {
+                    UserId = 6,
+                    FirstName = "Joe",
+                    LastName = "Jonas",
+                    Email = "joe.jonas@example.com",
+                    Passwords = "pass12"
+                });
+            foreach (var user in userManger.GetAll().Data)
+            {
+                Console.WriteLine(user.FirstName + "" + user.LastName);
+            }
         }
 
         private static void GetCarDetails()

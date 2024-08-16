@@ -35,6 +35,11 @@ namespace Business.Concrete
            return new SuccessDataResult<List<User>>(_userDal.GetAll(),Messages.UserListed);
         }
 
+        public IDataResult<User> GetById(int userId)
+        {
+            return new SuccessDataResult<User>(_userDal.Get(u=>u.UserId == userId));
+        }
+
         public IResult Update(User user)
         {
             _userDal.Delete(user);
