@@ -16,7 +16,10 @@ namespace Business.Constants
         public static string RentalListed="Kiralık Araçlar Listelendi";
         public static string UserListed="Kullanıcılar Listelendi";
         public static string CustomerListed="Müşteriler Listelendi";
-        internal static string RentalAdded="Kiralık Araç eklendi.";
-        internal static string CarNotAvailable="Araç mevcut değil.";
+        public static string RentalAdded="Kiralık Araç eklendi.";
+        public static string CarNotAvailable="Araç mevcut değil.";
+        public static string RentalCarNotFound = "Kiralık Araba Bulunamadı.";
+        public static string RentalCarUpdated="Kiralık Araba Güncellendi.";
+        public static string RentalCarDeleted="Kiralık Araç Silindi.";
     }
 }

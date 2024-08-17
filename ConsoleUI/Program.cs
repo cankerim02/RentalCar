@@ -5,6 +5,7 @@ using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ConsoleUI
 {
@@ -23,20 +24,62 @@ namespace ConsoleUI
             //GetCarDetails();
 
             //UserAddAndGetAll();
+            //CustomerGetAll();
 
-            //CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
-            //customerManager.Add(
-            //    new Customer
+            //RentalGetAll();
+
+           // Aracın Müsait Olduğu Durumu Test Etme:
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            //var result = rentalManager.Add(
+            //    new Rental
             //    {
-            //        CompanyName = "Test",
-            //        UserId = 7,
-            //        CustomerId = 6,
-            //    });
-            //foreach (var customer in customerManager.GetAll().Data)
-            //{
-            //    Console.WriteLine(customer.UserId+ " " +customer.CustomerId+ " " +customer.CompanyName);
-            //}
+            //        CarId = 12,
+            //        RentalId = 7,
+            //        CustomerId = 7,
+            //        ReturnDate = null, // Henüz iade edilmemiş, yani araç kiralanmış
+            //        RentDate = null,   // Kiralama işlemi yapılamaz.
 
+            //    });
+            //if (result.Success)
+            //{
+            //    Console.WriteLine("Rental added successfully");
+            //}
+            //else { Console.WriteLine(result.Message); } // Bu durumda "CarNotAvailable" mesajını alırsınız.
+            var result2 = rentalManager.Add(
+                new Rental
+                {
+                    CarId = 14,
+                    RentalId = 8,
+                    CustomerId = 8,
+                    RentDate = DateTime.Now.AddDays(-1), //  Araç kiralanmış
+                    ReturnDate = null, //  Heniz teslim edilmemiş
+                });
+
+            if (result2.Success)
+            {
+                Console.WriteLine("Rental added successfully");
+            }
+            else { Console.WriteLine("Araç kiralanmış ama henüz teslim edilmemiş"); }
+        }
+
+        private static void CustomerGetAll()
+        {
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            customerManager.Add(
+                new Customer
+                {
+                    CompanyName = "Test",
+                    UserId = 7,
+                    CustomerId = 6,
+                });
+            foreach (var customer in customerManager.GetAll().Data)
+            {
+                Console.WriteLine(customer.UserId + " " + customer.CustomerId + " " + customer.CompanyName);
+            }
+        }
+
+        private static void RentalGetAll()
+        {
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
             rentalManager.Add(
                 new Rental
@@ -48,9 +91,8 @@ namespace ConsoleUI
                 });
             foreach (var rental in rentalManager.GetAll().Data)
             {
-                Console.WriteLine(rental.CarId+ " " + rental.RentalId + " " + rental.RentDate + " " + rental.ReturnDate);
+                Console.WriteLine(rental.CarId + " " + rental.RentalId + " " + rental.RentDate + " " + rental.ReturnDate);
             }
-
         }
 
         private static void UserAddAndGetAll()

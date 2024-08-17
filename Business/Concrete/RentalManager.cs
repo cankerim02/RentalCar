@@ -20,6 +20,7 @@ namespace Business.Concrete
         }
         public IResult Add(Rental rental)
         {
+            // Mevcut kiralama durumunu kontrol et
             var rentalExist = _rentalDal.Get(r=>r.CarId == rental.CarId && r.ReturnDate ==null);
             if (rentalExist != null)
             {
@@ -30,9 +31,16 @@ namespace Business.Concrete
         }
 
         public IResult Delete(Rental rental)
-        {
+        { 
+            // Rental kaydını getir
+            var rentalExist = _rentalDal.Get(r => r.RentalId == rental.RentalId);
+            if(rentalExist == null)
+            {
+                return new ErrorResult(Messages.RentalCarNotFound);
+            }
+            // Eğer eşleşme varsa silme işlemini yap
             _rentalDal.Delete(rental);
-            return new SuccessResult();
+            return new SuccessResult(Messages.RentalCarDeleted);
         }
 
         public IDataResult<List<Rental>> GetAll()
@@ -47,8 +55,17 @@ namespace Business.Concrete
 
         public IResult Update(Rental rental)
         {
-            _rentalDal.Update(rental);
-            return new SuccessResult();
+            // Veritabanında güncellenecek aracı bul
+            var rentalExist = _rentalDal.Get(r => r.CarId == rental.CarId);
+            if (rentalExist == null) 
+            {
+                return new ErrorResult(Messages.RentalCarNotFound);
+            }
+            rentalExist.RentDate = rental.RentDate;
+            rentalExist.ReturnDate = rental.ReturnDate;
+            rentalExist.CustomerId = rental.CustomerId;
+            _rentalDal.Update(rentalExist);
+            return new SuccessResult(Messages.RentalCarUpdated);
         }
     }
 }
