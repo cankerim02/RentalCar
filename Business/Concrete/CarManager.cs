@@ -1,9 +1,11 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +23,22 @@ namespace Business.Concrete
         }
         public IResult Add(Car car)
         {
-            if(car.CarName.Length >= 2 && car.DailyPrice > 0)
-            {
-                return new SuccessResult(Messages.CarAdded);
+            //if(car.CarName.Length >= 2 && car.DailyPrice > 0)
+            //{
+            //    _carDal.Add(car);
+            //    return new SuccessResult(Messages.CarAdded);
 
+            //}
+
+            var context = new ValidationContext<Car>(car);
+            CarsValidator carsValidator = new CarsValidator();
+            var result = carsValidator.Validate(context);
+            if(!result.IsValid)
+            {
+                throw new ValidationException(result.Errors);
             }
-            return new ErrorResult("Araba ismi minimum 2 karakter olmalıdır ve günlük fiyatı 0'dan büyük olmalıdır.");
+            _carDal.Add(car);
+            return new SuccessResult(Messages.CarAdded);
             
         }
 
