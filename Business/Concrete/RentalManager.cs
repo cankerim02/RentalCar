@@ -1,8 +1,12 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Castle.Core.Resource;
+using Core.CrossCuttingConcern.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,12 +24,15 @@ namespace Business.Concrete
         }
         public IResult Add(Rental rental)
         {
+
             // Mevcut kiralama durumunu kontrol et
             var rentalExist = _rentalDal.Get(r=>r.CarId == rental.CarId && r.ReturnDate ==null);
             if (rentalExist != null)
             {
                 return new ErrorResult(Messages.CarNotAvailable);
             }
+
+            ValidationTool.Validate(new RentalsValidator(), rental);
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.RentalAdded);
         }
@@ -51,6 +58,11 @@ namespace Business.Concrete
         public IDataResult<Rental> GetById(int rentalId)
         {
             return new SuccessDataResult<Rental>(_rentalDal.Get(r=>r.RentalId == rentalId));
+        }
+
+        public IDataResult<List<RentalCarDetailDto>> GetRentalCarDetails()
+        {
+            return new SuccessDataResult<List<RentalCarDetailDto>>(_rentalDal.GetRentalCarDetails());
         }
 
         public IResult Update(Rental rental)

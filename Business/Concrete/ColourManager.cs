@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcern.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -23,13 +24,7 @@ namespace Business.Concrete
         }
         public IResult Add(Colour colour)
         {
-            var context = new ValidationContext<Colour>(colour);
-            ColoursValidator coloursValidator = new ColoursValidator();
-            var result = coloursValidator.Validate(context);
-            if (!result.IsValid)
-            {
-                throw new ValidationException(result.Errors);
-            }
+            ValidationTool.Validate(new ColoursValidator(), colour);
             _colourDal.Add(colour);
             return new SuccessResult();
         }
