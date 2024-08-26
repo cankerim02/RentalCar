@@ -2,6 +2,7 @@
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Castle.Core.Resource;
+using Core.Aspect.Autofac.Validation;
 using Core.CrossCuttingConcern.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -22,6 +23,8 @@ namespace Business.Concrete
         {
             _rentalDal = rentalDal;
         }
+
+        [ValidationAspect(typeof(RentalsValidator))]
         public IResult Add(Rental rental)
         {
 
@@ -32,7 +35,6 @@ namespace Business.Concrete
                 return new ErrorResult(Messages.CarNotAvailable);
             }
 
-            ValidationTool.Validate(new RentalsValidator(), rental);
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.RentalAdded);
         }
@@ -65,6 +67,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<RentalCarDetailDto>>(_rentalDal.GetRentalCarDetails());
         }
 
+        [ValidationAspect(typeof(RentalsValidator))]
         public IResult Update(Rental rental)
         {
             // Veritabanında güncellenecek aracı bul
