@@ -11,6 +11,7 @@ using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,20 +28,23 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CarsValidator))]
         public IResult Add(Car car)
         {
-            
-            _carDal.Add(car);
-            return new SuccessResult(Messages.CarAdded);
+            if(CheckIfCarCountOfBrandCorrect(car.BrandId).Success)
+            {
+                _carDal.Add(car);
+                return new SuccessResult(Messages.CarAdded);
+            }
+            return new ErrorResult();
             
         }
 
         public IResult Delete(Car car)
         {
-           var carToDelete = _carDal.Get(c=>c.CarId == car.CarId);
-           if(carToDelete == null)
-            {
-                return new ErrorResult();
-            }
-            _carDal.Delete(carToDelete);
+           //var carToDelete = _carDal.Get(c=>c.CarId == car.CarId);
+           //if(carToDelete == null)
+           // {
+           //     return new ErrorResult();
+           // }
+            _carDal.Delete(car);
            return  new SuccessResult();
         }
 
@@ -72,9 +76,22 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CarsValidator))]
         public IResult Update(Car car)
         {
+            var result = _carDal.GetAll(c => c.BrandId == car.BrandId).Count;
+            if (result >= 10)
+            {
+                return new ErrorResult(Messages.CarCountOfBrandError);
+            }
             _carDal.Update(car);
             return new SuccessResult();
         }
-
+        private IResult CheckIfCarCountOfBrandCorrect(int brandId)
+        {
+            var result = _carDal.GetAll(c => c.BrandId == brandId).Count;
+            if (result >= 10)
+            {
+                return new ErrorResult(Messages.CarCountOfBrandError);
+            }
+            return new SuccessResult();
+        }
     }
 }
