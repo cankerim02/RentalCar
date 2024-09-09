@@ -12,7 +12,7 @@ namespace Business.ValidationRules.FluentValidation
     {
         public CustomersValidator()
         {
-            RuleFor(c=>c.CompanyName).NotEmpty();
+            RuleFor(c=>c.CompanyName).NotEmpty().WithMessage("Company name boş olamaz.");
         }
     }
 }

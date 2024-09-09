@@ -53,7 +53,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetAll()
         {
-           return new SuccessDataResult<List<Car>>(_carDal.GetAll().Where(c=>c.CarName.Length >= 2).ToList(),Messages.CarListed);
+           return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.CarListed);
         }
 
         public IDataResult<Car> GetByCarId(int carId)

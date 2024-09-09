@@ -34,7 +34,6 @@ namespace Business.Concrete
             {
                 return new ErrorResult(Messages.CarNotAvailable);
             }
-
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.RentalAdded);
         }

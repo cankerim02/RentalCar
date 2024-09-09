@@ -41,6 +41,8 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+app.UseStaticFiles(); // kendým ekledým.
+
 app.MapControllers();
 
 app.Run();
