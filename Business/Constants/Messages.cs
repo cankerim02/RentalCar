@@ -25,5 +25,6 @@ namespace Business.Constants
         public static string CarNameAlreadyExistsError = "Aynı isimden araç eklenemez.";
         public static string CarImagesAdded="Resim başarıyla yüklendi.";
         public static string CarImagesDeleted = "Resim başarıyla silindi..";
+        public static string? AuthorizationDenied="Yetkiniz yok";
     }
 }

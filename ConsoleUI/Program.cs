@@ -106,7 +106,7 @@ namespace ConsoleUI
                     FirstName = "Joe",
                     LastName = "Jonas",
                     Email = "joe.jonas@example.com",
-                    Passwords = "pass12"
+                    //Passwords = "pass12"
                 });
             foreach (var user in userManger.GetAll().Data)
             {
