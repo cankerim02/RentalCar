@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entities.Concrete;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,5 +27,11 @@ namespace Business.Constants
         public static string CarImagesAdded="Resim başarıyla yüklendi.";
         public static string CarImagesDeleted = "Resim başarıyla silindi..";
         public static string? AuthorizationDenied="Yetkiniz yok";
+        public static string UserNotFound="Kullanıcı bulunamadı";
+        public static string PasswordError="Parola yanlış";
+        public static string SuccessfulLogin="Başarılı giriş yaptı";
+        public static string UserRegistered="Kayıt işlemi başarılı";
+        public static string UserAlreadyExists="Kullanıcı mevcut.";
+        public static string AccessTokenCreated = "Token Oluşturuldu.";
     }
 }
