@@ -1,6 +1,9 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspect.Autofac.Caching;
+using Core.Aspect.Autofac.Performance;
+using Core.Aspect.Autofac.Transaction;
 using Core.Aspect.Autofac.Validation;
 using Core.CrossCuttingConcern.Validation;
 using Core.Utilities.Business;
@@ -25,14 +28,14 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
-        
+
         [ValidationAspect(typeof(CarsValidator))]
         public IResult Add(Car car)
         {
             IResult result = BusinessRules.Run(
                 CheckIfCarCountOfBrandCorrect(car.BrandId),
                 CheckIfCarNameExists(car.CarName));
-            if(result!=null)
+            if (result != null)
             {
                 return result;
             }
@@ -42,20 +45,23 @@ namespace Business.Concrete
 
         public IResult Delete(Car car)
         {
-           //var carToDelete = _carDal.Get(c=>c.CarId == car.CarId);
-           //if(carToDelete == null)
-           // {
-           //     return new ErrorResult();
-           // }
+            //var carToDelete = _carDal.Get(c=>c.CarId == car.CarId);
+            //if(carToDelete == null)
+            // {
+            //     return new ErrorResult();
+            // }
             _carDal.Delete(car);
-           return  new SuccessResult();
+            return new SuccessResult();
         }
 
+        [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
-           return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.CarListed);
+            Thread.Sleep(2000);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarListed);
         }
 
+        //[PerformanceAspect(5)]
         public IDataResult<Car> GetByCarId(int carId)
         {
             return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == carId));
@@ -76,7 +82,20 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColourId == colorId));
         }
 
+        //[TransactionScopeAspect]
+        //public IResult TransctionalOperation(Car car)
+        //{
+        //    Add(car);
+        //    if (car.DailyPrice < 10)
+        //    {
+        //        throw new Exception("");
+        //    }
+        //    Add(car);
+        //    return null;
+        //}
+
         [ValidationAspect(typeof(CarsValidator))]
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Update(Car car)
         {
             var result = _carDal.GetAll(c => c.BrandId == car.BrandId).Count;
@@ -100,7 +119,7 @@ namespace Business.Concrete
         private IResult CheckIfCarNameExists(string carName)
         {
             var result = _carDal.GetAll(c => c.CarName == carName).Any();
-            if(result)
+            if (result)
             {
                 return new ErrorResult(Messages.CarNameAlreadyExistsError);
             }
