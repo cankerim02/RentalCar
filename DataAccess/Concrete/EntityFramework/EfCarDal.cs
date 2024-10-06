@@ -27,7 +27,9 @@ namespace DataAccess.Concrete.EntityFramework
                                  CarName = c.CarName,
                                  BrandName = b.BrandName,
                                  ColourName = cl.ColourName,
+                                 ModelYear =c.ModelYear,
                                  DailyPrice = c.DailyPrice
+
                              };
                 // Bu noktada sorgu henüz çalıştırılmamıştır
                 return result.ToList(); // Burada sorgu çalıştırılır ve sonuçlar elde edilir
