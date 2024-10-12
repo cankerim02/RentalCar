@@ -27,7 +27,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  CarName = c.CarName,
                                  BrandName = b.BrandName,
                                  ColourName = cl.ColourName,
-                                 ModelYear =c.ModelYear,
+                                 ModelYear = c.ModelYear,
                                  DailyPrice = c.DailyPrice
 
                              };
@@ -35,10 +35,39 @@ namespace DataAccess.Concrete.EntityFramework
                 return result.ToList(); // Burada sorgu çalıştırılır ve sonuçlar elde edilir
 
                 // Bilgi: 
-                
+
                 //IQueryable, sorguyu hemen yürütmez. Sorgu tanımlandıktan sonra, sonuçlara erişilene kadar
                 //(örneğin ToList(), FirstOrDefault() gibi metodlar çağrılana kadar) sorgu yürütülmez.
 
+
+
+            }
+        }
+
+        public List<CarDetailDto> GetCarDetailsCarId(int carId)
+        {
+            using (RentalCarContext rentalContext = new RentalCarContext())
+            {
+                var result = from c in rentalContext.Cars
+                             join cl in rentalContext.Colours
+                             on c.ColourId equals cl.ColourId
+                             join b in rentalContext.Brands
+                             on c.BrandId equals b.BrandId
+                             where c.CarId == carId
+                             select new CarDetailDto
+                             {
+                                 CarId = c.CarId,
+                                 BrandId = b.BrandId,
+                                 ColourId = cl.ColourId,
+                                 CarName = c.CarName,
+                                 BrandName = b.BrandName,
+                                 ColourName = cl.ColourName,
+                                 ModelYear = c.ModelYear,
+                                 DailyPrice = c.DailyPrice,
+                                 Descriptions = c.Descriptions
+                                 
+                             };
+                return result.ToList();
             }
         }
     }

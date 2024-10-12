@@ -66,6 +66,17 @@ namespace RentalCarAPI.Controllers
             return BadRequest(result.Message);
 
         }
+        [HttpGet("getcardetailsId")]
+        public IActionResult GetCarDetailsCarId(int carId)
+        {
+            var result = _carService.GetCarDetailsCarId(carId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
+
+        }
 
 
 
