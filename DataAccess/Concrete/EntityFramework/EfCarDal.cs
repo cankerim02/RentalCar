@@ -2,6 +2,7 @@
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,11 +25,15 @@ namespace DataAccess.Concrete.EntityFramework
                              select new CarDetailDto
                              {
                                  CarId = c.CarId,
+                                 BrandId = b.BrandId,
+                                 ColourId = cl.ColourId,
                                  CarName = c.CarName,
                                  BrandName = b.BrandName,
                                  ColourName = cl.ColourName,
                                  ModelYear = c.ModelYear,
-                                 DailyPrice = c.DailyPrice
+                                 DailyPrice = c.DailyPrice,
+                                 Descriptions = c.Descriptions,
+                                 ImagePath=(from ci in rentalContext.CarImages where ci.CarId == c.CarId select ci.ImagePath).FirstOrDefault()
 
                              };
                 // Bu noktada sorgu henüz çalıştırılmamıştır
@@ -64,8 +69,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  ColourName = cl.ColourName,
                                  ModelYear = c.ModelYear,
                                  DailyPrice = c.DailyPrice,
-                                 Descriptions = c.Descriptions
-                                 
+                                 Descriptions = c.Descriptions,
+                                 ImagePath = (from ci in rentalContext.CarImages where ci.CarId == c.CarId select ci.ImagePath).FirstOrDefault()
                              };
                 return result.ToList();
             }
