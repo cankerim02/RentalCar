@@ -31,10 +31,10 @@ namespace RentalCarAPI.Controllers
 
         }
 
-        [HttpGet("getbycolorid")]
-        public IActionResult GetCarsByColorId(int colorId)
+        [HttpGet("getbycolourId")]
+        public IActionResult GetCarsBycolourId(int colourId)
         {
-            var result = _carService.GetCarsByColorId(colorId);
+            var result = _carService.GetCarsBycolourId(colourId);
             if (result.Success)
             {
                 return Ok(result);
@@ -70,6 +70,17 @@ namespace RentalCarAPI.Controllers
         public IActionResult GetCarDetailsCarId(int carId)
         {
             var result = _carService.GetCarDetailsCarId(carId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
+
+        }
+        [HttpGet("getbrandandcolourId")]
+        public IActionResult GetCarByColourAndBrand(int colourId, int brandId)
+        {
+            var result = _carService.GetCarByColourAndBrand(colourId,brandId);
             if (result.Success)
             {
                 return Ok(result);

@@ -20,11 +20,12 @@ namespace DataAccess.Abstract
         //void Update(Car cars);
         //void Delete(Car cars);
 
-        //List<Car> GetAllByCarsColor(int colorId);
+        //List<Car> GetAllByCarsColor(int colourId);
         //List<Car> GetAllByBrandColor(int brandId);
 
         List<CarDetailDto> GetCarDetails();
         List<CarDetailDto> GetCarDetailsCarId(int carId);
+        List<CarDetailDto> GetCarByColourAndBrand(int colourId, int brandId);
 
     }
 }

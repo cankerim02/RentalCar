@@ -20,7 +20,7 @@ namespace ConsoleUI
             //DailyPriceAndCarName();,
 
             //GetCarsByBrandId();,
-            //GetCarsByColorId();
+            //GetCarsBycolourId();
             //GetCarDetails();
 
             //UserAddAndGetAll();
@@ -132,10 +132,10 @@ namespace ConsoleUI
             }
         }
 
-        //private static void GetCarsByColorId()
+        //private static void GetCarsBycolourId()
         //{
         //    CarManager carManager = new CarManager(new EfCarDal());
-        //    foreach (var car in carManager.GetCarsByColorId(1))
+        //    foreach (var car in carManager.GetCarsBycolourId(1))
         //    {
         //        Console.WriteLine(car.CarId + " " + car.CarName + " " + car.ColourId);
         //    }
